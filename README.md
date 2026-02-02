@@ -23,7 +23,7 @@ It allows users to register, log in, create blog posts with images, and view blo
 
 - **Backend:** Django (Python)
 - **Frontend:** HTML, CSS
-- **Database:** SQLite
+- **Database:** SQL
 - **Authentication:** Django Auth System
 - **Media Handling:** Django Media Files
 
