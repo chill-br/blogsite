@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Blog</title>
+    <link rel="stylesheet" href="{% static 'blog/styles.css' %}">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="{% url 'home' %}" class="logo">Blog</a>
+
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Home</a></li>
+
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'create_post' %}" class="nav-btn">Create</a></li>
+                <li><a href="{% url 'logout' %}" class="logout">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'register' %}" class="nav-btn">Register</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+
+<div class="editor-wrapper">
+    <div class="editor-card">
+        <h2>✍️ Create New Blog</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label>Title</label>
+            <input type="text" name="title" placeholder="Enter blog title" required>
+
+            <label>Content</label>
+            <textarea name="content" rows="7" placeholder="Write your blog here..." required></textarea>
+
+            <label>Image</label>
+            <input type="file" name="image">
+
+            <button type="submit">Publish</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

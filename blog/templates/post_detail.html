@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Detail</title>
+    <link rel="stylesheet" href="{% static 'blog/styles.css' %}">
+</head>
+<body>
+
+    <nav class="navbar">
+    <div class="nav-container">
+        <a href="{% url 'home' %}" class="logo">Blog</a>
+
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Home</a></li>
+
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'create_post' %}" class="nav-btn">Create</a></li>
+                <li><a href="{% url 'logout' %}" class="logout">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'register' %}" class="nav-btn">Register</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+
+    <section class="blog-detail">
+    <h1>{{ post.title }}</h1>
+    <p class="date">
+        Published on {{ post.created_at|date:"d M Y" }} by {{ post.author }}
+    </p>
+
+    {% if post.image %}
+        <img src="{{ post.image.url }}" class="detail-img">
+    {% endif %}
+
+    <p>{{ post.content }}</p>
+
+    {% if post.author == user %}
+        <div class="card-actions">
+            <a href="{% url 'edit_post' post.id %}">Edit</a>
+            <a href="{% url 'delete_post' post.id %}"
+               onclick="return confirm('Delete this blog?')">Delete</a>
+        </div>
+    {% endif %}
+</section>
+
+
+</body>
+</html>
